@@ -101,7 +101,7 @@ fun BackButton(modifier: Modifier = Modifier, label: String = "Back", onClick: (
             onClick = { onClick() }
         ) {
             Text(
-                text = label,
+                text = "< $label",
                 fontSize = 30.sp
             )
         }
