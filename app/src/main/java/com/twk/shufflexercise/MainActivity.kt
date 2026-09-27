@@ -7,13 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.absolutePadding
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.twk.shufflexercise.login.LoginScreen
 import com.twk.shufflexercise.ui.theme.ShufflexerciseTheme
+import com.twk.shufflexercise.welcome.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,25 +31,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ShufflexerciseTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = "welcome"
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(8.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        GreetingText(
-                            message = "Shufflexercise",
-                            desc = "Get Moving Today!",
-                            modifier = Modifier.padding(8.dp)
+                    composable("welcome") {
+                        WelcomeScreen(
+                            onContinueSuccess = {
+                                navController.navigate("login")
+                            }
                         )
-                        MainButton(
-                            label = "Continue"
-                        ) {}
+                    }
+                    composable("login") {
+                        LoginScreen(onBack = { navController.popBackStack() })
                     }
                 }
             }
@@ -56,7 +54,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GreetingText(message: String, desc: String, modifier: Modifier = Modifier) {
+fun MainBoldText(message: String, desc: String, modifier: Modifier = Modifier) {
     Column (
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -77,10 +75,13 @@ fun GreetingText(message: String, desc: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MainButton(label: String, onClick: () -> Unit) {
-    Column(Modifier
+fun MainTextButton(label: String, onClick: () -> Unit) {
+    Column(
+        Modifier
         .fillMaxWidth()
-        .absolutePadding(30.dp, 120.dp, 30.dp, 0.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        .absolutePadding(30.dp, 120.dp, 30.dp, 0.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Button(onClick = { onClick() }) {
             Text(
                 text = label,
@@ -91,14 +92,32 @@ fun MainButton(label: String, onClick: () -> Unit) {
     }
 }
 
-// preview code
-//@Preview(
-//    showBackground = true,
-//    showSystemUi = true
-//)
-//@Composable
-//fun GreetingPreview() {
-//    ShufflexerciseTheme {
-//        GreetingText(message = "Shufflexercise", desc = "Get Moving Today!")
-//    }
-//}
+@Composable
+fun BackButton(modifier: Modifier = Modifier, label: String = "Back", onClick: () -> Unit) {
+    Column(
+        modifier = modifier
+    ) {
+        TextButton(
+            onClick = { onClick() }
+        ) {
+            Text(
+                text = label,
+                fontSize = 30.sp
+            )
+        }
+    }
+
+}
+
+@Composable
+fun AltButton(label: String, onClick: () -> Unit) {
+    TextButton(
+        onClick = { onClick() }
+    ) {
+        Text(
+            text = label,
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+        )
+    }
+}
