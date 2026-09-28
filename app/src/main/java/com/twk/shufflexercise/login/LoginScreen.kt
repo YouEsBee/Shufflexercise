@@ -17,7 +17,7 @@ import com.twk.shufflexercise.BackButton
 import com.twk.shufflexercise.MainBoldText
 
 @Composable
-fun LoginScreen(onBack: () -> Unit) {
+fun LoginScreen(onCreateProfileSuccess: () -> Unit, onBack: () -> Unit) {
     Scaffold(
         contentWindowInsets = WindowInsets.safeDrawing
     ) { innerPadding ->
@@ -48,7 +48,7 @@ fun LoginScreen(onBack: () -> Unit) {
 
                 AltButton(
                     label = "Create Profile"
-                ) {}
+                ) { onCreateProfileSuccess() }
             }
         }
     }

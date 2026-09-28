@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.twk.shufflexercise.createProfile.CreateProfileScreen
 import com.twk.shufflexercise.login.LoginScreen
 import com.twk.shufflexercise.ui.theme.ShufflexerciseTheme
 import com.twk.shufflexercise.welcome.WelcomeScreen
@@ -45,7 +49,21 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable("login") {
-                        LoginScreen(onBack = { navController.popBackStack() })
+                        LoginScreen(
+                            onCreateProfileSuccess = {
+                                navController.navigate("createProfile")
+                            },
+                            onBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+                    composable("createProfile") {
+                        CreateProfileScreen(
+                            onBack = {
+                                navController.popBackStack()
+                            }
+                        )
                     }
                 }
             }
@@ -55,6 +73,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainBoldText(message: String, desc: String, modifier: Modifier = Modifier) {
+    val bigFontSize = 50
+    val smallFontSize = 40
     Column (
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,14 +82,16 @@ fun MainBoldText(message: String, desc: String, modifier: Modifier = Modifier) {
     ) {
         Text(
             text = message,
-            fontSize = 50.sp,
+            fontSize = (bigFontSize).sp,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            lineHeight = (bigFontSize + 10).sp
         )
         Text(
             text = desc,
-            fontSize = 30.sp,
-            textAlign = TextAlign.Center
+            fontSize = (smallFontSize).sp,
+            textAlign = TextAlign.Center,
+            lineHeight = (smallFontSize + 10).sp
         )
     }
 }
@@ -120,4 +142,25 @@ fun AltButton(label: String, onClick: () -> Unit) {
             fontSize = 30.sp,
         )
     }
+}
+
+@Composable
+fun TextInputField(label: String, modifier: Modifier = Modifier, placeholder: String = "") {
+    TextField(
+        state = rememberTextFieldState(),
+        label = {
+            Text(
+                text = label,
+                fontSize = 30.sp
+            )
+        },
+        placeholder = {
+            Text(
+                text = placeholder,
+                fontSize = 40.sp
+            )
+        },
+        modifier = modifier,
+        textStyle = LocalTextStyle.current.copy(fontSize = 40.sp)
+    )
 }
