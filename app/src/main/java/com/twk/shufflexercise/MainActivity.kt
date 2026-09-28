@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
@@ -24,7 +23,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room3.Room
 import com.twk.shufflexercise.createProfile.CreateProfileScreen
+import com.twk.shufflexercise.database.User
+import com.twk.shufflexercise.database.UserDatabase
 import com.twk.shufflexercise.login.LoginScreen
 import com.twk.shufflexercise.ui.theme.ShufflexerciseTheme
 import com.twk.shufflexercise.welcome.WelcomeScreen
@@ -145,9 +147,10 @@ fun AltButton(label: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun TextInputField(label: String, modifier: Modifier = Modifier, placeholder: String = "") {
+fun TextInputField(label: String, value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier, placeholder: String = "") {
     TextField(
-        state = rememberTextFieldState(),
+        value = value,
+        onValueChange = onValueChange,
         label = {
             Text(
                 text = label,

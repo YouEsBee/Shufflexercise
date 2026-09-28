@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.twk.shufflexercise.BackButton
@@ -17,6 +21,8 @@ import com.twk.shufflexercise.TextInputField
 
 @Composable
 fun CreateProfileScreen(onBack: () -> Unit) {
+    var userNameInput by remember { mutableStateOf("") }
+
     Scaffold(
         contentWindowInsets = WindowInsets.safeDrawing
     ) { innerPadding ->
@@ -38,6 +44,8 @@ fun CreateProfileScreen(onBack: () -> Unit) {
 
             TextInputField(
                 label = "Enter A User Name",
+                value = userNameInput,
+                onValueChange = { userNameInput = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal=16.dp)
