@@ -2,14 +2,14 @@ package com.twk.shufflexercise.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -53,30 +53,32 @@ fun LoginScreen(
                     modifier = Modifier.padding(innerPadding)
                 )
 
-                LazyColumn(
+                LazyVerticalGrid (
+                    columns = GridCells.Fixed(3),
                     contentPadding = innerPadding,
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
                     items(state.users) { user ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth()
+                        Column (
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Column(
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                // profile pic to be inserted here
-                                ///////// ---------- /////////
-                                Text (
-                                    text = user.userName,
-                                    fontSize = 20.sp
-                                )
-                            }
+
+                            // profile pic to be inserted here
+                            ///////// ---------- /////////
+                            Text (
+                                text = user.userName,
+                                fontSize = 20.sp
+                            )
+
                             IconButton(onClick = {
                                 onEvent(UserEvent.DeleteUser(user))
                             }) {
-                                Text("Delete")
+                                Text("Del")
                             }
+
                         }
                     }
                 }

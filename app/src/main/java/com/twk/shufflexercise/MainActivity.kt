@@ -82,7 +82,8 @@ class MainActivity : ComponentActivity() {
                                 navController.navigate("createProfile")
                             },
                             onBack = {
-                                navController.popBackStack()
+                                navController.navigate("welcome")
+                                //navController.popBackStack()
                             },
                             state = state,
                             onEvent = viewModel::onEvent
@@ -91,7 +92,8 @@ class MainActivity : ComponentActivity() {
                     composable("createProfile") {
                         CreateProfileScreen(
                             onBack = {
-                                navController.popBackStack()
+                                navController.navigate("login")
+                                //navController.popBackStack()
                             },
                             state = state,
                             onEvent = viewModel::onEvent,
