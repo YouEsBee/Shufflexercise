@@ -8,20 +8,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.twk.shufflexercise.BackButton
 import com.twk.shufflexercise.MainBoldText
 import com.twk.shufflexercise.MainTextButton
 import com.twk.shufflexercise.TextInputField
+import com.twk.shufflexercise.database.UserEvent
+import com.twk.shufflexercise.database.UserState
 
 @Composable
-fun CreateProfileScreen(onBack: () -> Unit) {
-    var userNameInput by remember { mutableStateOf("") }
+fun CreateProfileScreen(
+    state: UserState,
+    onEvent: (UserEvent) -> Unit,
+    onBack: () -> Unit
+) {
 
     Scaffold(
         contentWindowInsets = WindowInsets.safeDrawing
@@ -44,8 +45,10 @@ fun CreateProfileScreen(onBack: () -> Unit) {
 
             TextInputField(
                 label = "Enter A User Name",
-                value = userNameInput,
-                onValueChange = { userNameInput = it },
+                value = state.userName,
+                onValueChange = {
+                    onEvent(UserEvent.SetUserName(it))
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal=16.dp)
@@ -57,8 +60,9 @@ fun CreateProfileScreen(onBack: () -> Unit) {
 
             // Add create profile functionality by writing inputs into Room DB
             MainTextButton(
-                label = "Create Profile"
-            ) { }
+                label = "Create Profile",
+                onClick = {onEvent(UserEvent.CreateUser)}
+            )
         }
     }
 }
