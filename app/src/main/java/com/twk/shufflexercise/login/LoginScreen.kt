@@ -2,9 +2,11 @@ package com.twk.shufflexercise.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -49,8 +51,7 @@ fun LoginScreen(
             {
                 MainBoldText(
                     message = "Select Profile",
-                    desc = "Choose which user you are",
-                    modifier = Modifier.padding(innerPadding)
+                    desc = "Choose which user you are"
                 )
 
                 LazyVerticalGrid (
@@ -73,6 +74,7 @@ fun LoginScreen(
                                 fontSize = 20.sp
                             )
 
+                            // Delete user code
                             IconButton(onClick = {
                                 onEvent(UserEvent.DeleteUser(user))
                             }) {
@@ -85,13 +87,14 @@ fun LoginScreen(
 
                 Text(
                     text = "Not these users?",
-                    fontSize = 30.sp,
-                    modifier = Modifier.padding(innerPadding)
+                    fontSize = 30.sp
                 )
 
                 AltButton(
                     label = "Create Profile"
                 ) { onCreateProfileSuccess() }
+
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
