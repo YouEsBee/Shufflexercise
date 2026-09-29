@@ -75,7 +75,7 @@ fun LoginScreen(
                             IconButton(onClick = {
                                 onEvent(UserEvent.DeleteUser(user))
                             }) {
-                                Text("Delete User")
+                                Text("Delete")
                             }
                         }
                     }

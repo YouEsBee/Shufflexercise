@@ -21,7 +21,8 @@ import com.twk.shufflexercise.database.UserState
 fun CreateProfileScreen(
     state: UserState,
     onEvent: (UserEvent) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onSuccess: () -> Unit
 ) {
 
     Scaffold(
@@ -61,7 +62,10 @@ fun CreateProfileScreen(
             // Add create profile functionality by writing inputs into Room DB
             MainTextButton(
                 label = "Create Profile",
-                onClick = {onEvent(UserEvent.CreateUser)}
+                onClick = {
+                    onEvent(UserEvent.CreateUser)
+                    onSuccess()
+                }
             )
         }
     }

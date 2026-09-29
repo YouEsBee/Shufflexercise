@@ -94,7 +94,12 @@ class MainActivity : ComponentActivity() {
                                 navController.popBackStack()
                             },
                             state = state,
-                            onEvent = viewModel::onEvent
+                            onEvent = viewModel::onEvent,
+                            onSuccess = {
+                                navController.navigate("login") {
+                                    popUpTo("createProfile")
+                                }
+                            }
                         )
                     }
                 }

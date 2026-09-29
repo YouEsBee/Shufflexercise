@@ -52,7 +52,9 @@ fun WelcomeScreen(
                 )
                 MainTextButton(
                     label = "Continue",
-                    onClick = { onContinueSuccess() }
+                    onClick = {
+                        onContinueSuccess()
+                    }
                 )
             }
         }
